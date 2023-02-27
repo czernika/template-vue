@@ -7,6 +7,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
+import svgSpritePlugin from 'vite-plugin-svg-sprite-component'
 
 export default defineConfig({
     resolve: {
@@ -42,5 +43,11 @@ export default defineConfig({
         }),
 
         Layouts(),
+
+        svgSpritePlugin({
+            component: {
+                type: 'vue',
+            },
+        }),
     ],
 })
