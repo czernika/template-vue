@@ -1,0 +1,39 @@
+name: Running Tests
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "**.js"
+      - "**.ts"
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: true
+      matrix:
+        node-version: [16, 18]
+
+    name: Run Tests for Node ${{ matrix.node-version }}
+
+    steps:
+      - name: Check out the source code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: "https://registry.npmjs.org"
+          cache: "npm"
+
+      - run: npm ci
+
+      - run: npm run build --if-present
+
+      - name: Run Tests
+        run: npm test
