@@ -35,5 +35,6 @@ module.exports = {
         }],
         '@typescript-eslint/no-inferrable-types': 'warn',
         'vue/html-indent': ['warn', 4],
+        'vue/multi-word-component-names': 'off',
     },
 }

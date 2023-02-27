@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen antialiased font-sans">
+    <div>
         <RouterView />
     </div>
 </template>
