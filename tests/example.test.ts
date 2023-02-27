@@ -1,5 +1,7 @@
-import { expect, test } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
-test('asserts true is true', () => {
-    expect(true).toBeTruthy()
+describe('when test is running', () => {
+    it('shows green status bar', () => {
+        expect(true).toBeTruthy()
+    })
 })

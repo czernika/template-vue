@@ -1,42 +1,29 @@
+/* eslint-env node */
+
 module.exports = {
-    'env': {
-        'browser': true,
-        'es2021': true
+    root: true,
+    env: {
+        browser: true,
     },
-    'extends': [
-        'eslint:recommended',
-        'plugin:@typescript-eslint/recommended'
+    plugins: [
+        '@typescript-eslint',
     ],
-    'overrides': [
-    ],
-    'parser': '@typescript-eslint/parser',
-    'parserOptions': {
-        'ecmaVersion': 'latest',
-        'sourceType': 'module'
+    parser: '@typescript-eslint/parser',
+    parserOptions: {
+        sourceType: 'module',
+        ecmaVersion: 2020,
     },
-    'plugins': [
-        '@typescript-eslint'
-    ],
-    'rules': {
-        'indent': [
-            'error',
-            4
-        ],
-        'linebreak-style': [
-            'error',
-            'unix'
-        ],
-        'quotes': [
-            'error',
-            'single'
-        ],
-        'semi': [
-            'error',
-            'never'
-        ],
-        '@typescript-eslint/ban-ts-comment': [
-            'error',
-            {'ts-ignore': 'allow-with-description'},
-        ],
-    }
+    rules: {
+        'no-console': 'warn',
+        'no-alert': 'error',
+        'semi': ['warn', 'never'],
+        'quotes': ['warn', 'single', { 'avoidEscape': true }],
+        'comma-dangle': ['warn', {
+            arrays: 'always-multiline',
+            objects: 'always-multiline',
+            imports: 'always-multiline',
+            exports: 'always-multiline',
+            functions: 'never',
+        }],
+    },
 }
