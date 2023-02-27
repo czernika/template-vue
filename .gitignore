@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/node
 # Edit at https://www.toptal.com/developers/gitignore?templates=node
 
+## https://github.com/antfu/unplugin-auto-import#eslint
+.eslintrc-auto-import.json
+
 ### Node ###
 # Logs
 *.log

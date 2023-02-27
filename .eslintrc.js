@@ -6,13 +6,21 @@ module.exports = {
         browser: true,
     },
     plugins: [
+        'vue',
         '@typescript-eslint',
     ],
-    parser: '@typescript-eslint/parser',
+    parser: 'vue-eslint-parser',
     parserOptions: {
+        parser: '@typescript-eslint/parser',
         sourceType: 'module',
         ecmaVersion: 2020,
     },
+    extends: [
+        './.eslintrc-auto-import.json',
+        'eslint:recommended',
+        'plugin:vue/vue3-strongly-recommended',
+        'plugin:@typescript-eslint/recommended',
+    ],
     rules: {
         'no-console': 'warn',
         'no-alert': 'error',
@@ -25,5 +33,7 @@ module.exports = {
             exports: 'always-multiline',
             functions: 'never',
         }],
+        '@typescript-eslint/no-inferrable-types': 'warn',
+        'vue/html-indent': ['warn', 4],
     },
 }
