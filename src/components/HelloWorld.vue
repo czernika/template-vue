@@ -1,13 +1,13 @@
 <template>
-    <div>
-        {{ title }}
+    <div class="container">
+        <div class="flex justify-center items-center h-screen text-3xl text-cyan-700">
+            {{ exampleStore.title }}
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-export interface Props {
-    title: string
-}
+import { useExampleStore } from '@/stores/example'
 
-defineProps<Props>()
+const exampleStore = useExampleStore()
 </script>

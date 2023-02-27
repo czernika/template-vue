@@ -8,7 +8,10 @@ export default defineConfig({
 
     extract: {
         include: [
-            './src/**/*{.ts,.vue}',
+            './src/components/**/*.vue',
+            './src/layouts/**/*.vue',
+            './src/views/**/*.vue',
+            './src/*{.vue,.ts}',
             './index.html',
         ],
     },

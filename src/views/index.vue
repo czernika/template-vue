@@ -1,6 +1,6 @@
 <template>
     <div>
-        <HelloWorld title="Hello World" />
+        <HelloWorld />
     </div>
 </template>
 
@@ -10,4 +10,6 @@
 
 <route lang="yaml">
 name: 'home'
+meta:
+    layout: 'default'
 </route>
