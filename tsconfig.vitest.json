@@ -1,0 +1,14 @@
+{
+    "extends": "./tsconfig.web.json",
+    "exclude": [],
+    "include": [
+        "src/**/*",
+        "src/**/*.vue",
+        "tests/**/*"
+    ],
+    "compilerOptions": {
+        "composite": true,
+        "lib": [],
+        "types": ["node", "jsdom", "vitest"]
+    }
+}

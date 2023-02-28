@@ -1,10 +1,17 @@
 <template>
-    <div class="container">
-        <div class="flex justify-center flex-col items-center h-screen text-2xl text-cyan-700 selection:bg-cyan-600 selection:text-white">
-            <VueLogo class="w-auto h-36 mb-4" />
+    <div class="text-center">
+        <VueLogo />
 
-            <h1>{{ exampleStore.title }}</h1>
-        </div>
+        <h1 class="text-2xl">
+            {{ exampleStore.title }}
+        </h1>
+
+        <RouterLink
+            :to="{ name: 'about' }"
+            class="underline"
+        >
+            About
+        </RouterLink>
     </div>
 </template>
 
