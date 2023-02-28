@@ -8,10 +8,16 @@ export default defineConfig({
 
     extract: {
         include: [
+            /** Vue template classes */
             './src/components/**/*.vue',
             './src/layouts/**/*.vue',
             './src/views/**/*.vue',
             './src/*{.vue,.ts}',
+
+            /** Classes from global stores */
+            './src/stores/**/*.ts',
+
+            /** Index file */
             './index.html',
         ],
     },
