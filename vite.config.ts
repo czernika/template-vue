@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
 
 import vue from '@vitejs/plugin-vue'
@@ -11,77 +11,91 @@ import Layouts from 'vite-plugin-vue-layouts'
 import svgSpritePlugin from 'vite-plugin-svg-sprite-component'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import legacy from '@vitejs/plugin-legacy'
+import generateSitemap from 'vite-plugin-pages-sitemap'
 
-export default defineConfig({
-    resolve: {
-        alias: {
-            '@': fileURLToPath(new URL('./src', import.meta.url)),
+export default ({ mode }) => {
+    process.env = {...process.env, ...loadEnv(mode, process.cwd())}
+    const isProd = process.env.NODE_ENV === 'production'
+
+    return defineConfig({
+        resolve: {
+            alias: {
+                '@': fileURLToPath(new URL('./src', import.meta.url)),
+            },
         },
-    },
 
-    build: {
-        manifest: true,
+        build: {
+            manifest: true,
 
-        rollupOptions: {
-            output: {
-                assetFileNames: (assetInfo) => {
-                    if (typeof assetInfo.name === 'undefined') {
-                        return '[name].[extname]'
-                    }
+            rollupOptions: {
+                output: {
+                    assetFileNames: (assetInfo) => {
+                        if (typeof assetInfo.name === 'undefined') {
+                            return '[name].[extname]'
+                        }
 
-                    let extType = assetInfo.name.split('.')[1]
-                    if (/png|jpe?g|gif|tiff|bmp|webp|ico/i.test(extType)) {
-                        extType = 'images'
-                    }
+                        let extType = assetInfo.name.split('.')[1]
+                        if (/png|jpe?g|gif|tiff|bmp|webp|ico/i.test(extType)) {
+                            extType = 'images'
+                        }
 
-                    if (/svg/i.test(extType)) {
-                        extType = 'icons'
-                    }
+                        if (/svg/i.test(extType)) {
+                            extType = 'icons'
+                        }
 
-                    return `${extType}/[name].[hash][extname]`
+                        return `${extType}/[name].[hash][extname]`
+                    },
+
+                    chunkFileNames: 'js/[name].[hash].js',
+                    entryFileNames: 'js/[name].[hash].js',
                 },
-
-                chunkFileNames: 'js/[name].[hash].js',
-                entryFileNames: 'js/[name].[hash].js',
             },
         },
-    },
 
 
-    plugins: [
-        vue(),
+        plugins: [
+            vue(),
 
-        WindiCSS(),
+            WindiCSS(),
 
-        lightningcss(),
+            lightningcss(),
 
-        // legacy(),
+            // legacy(),
 
-        AutoImport({
-            imports: [
-                'vue',
-                'vue-router',
-            ],
-            dts: 'src/types/generated/auto-imports.d.ts',
-            vueTemplate: true,
-            eslintrc: {
-                enabled: true,
-            },
-        }),
+            AutoImport({
+                imports: [
+                    'vue',
+                    'vue-router',
+                ],
+                dts: 'src/types/generated/auto-imports.d.ts',
+                vueTemplate: true,
+                eslintrc: {
+                    enabled: true,
+                },
+            }),
 
-        Components({
-            dts: 'src/types/generated/components.d.ts',
-            directoryAsNamespace: true,
-        }),
+            Components({
+                dts: 'src/types/generated/components.d.ts',
+                directoryAsNamespace: true,
+            }),
 
-        Pages({
-            dirs: 'src/views',
-        }),
+            Pages({
+                dirs: 'src/views',
+                resolver: 'vue',
+                routeStyle: 'nuxt',
+                onRoutesGenerated: routes => {
+                    return isProd ? generateSitemap({
+                        hostname: process.env.VITE_APP_URL,
+                        routes,
+                    }) : routes
+                },
+            }),
 
-        Layouts(),
+            Layouts(),
 
-        svgSpritePlugin({
-            component: { type: 'vue' },
-        }),
-    ],
-})
+            svgSpritePlugin({
+                component: { type: 'vue' },
+            }),
+        ],
+    })
+}
